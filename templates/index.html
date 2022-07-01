@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> V2GDecoder - Web </title>
+    </head>
+    <body>
+        <center>
+            <h5> V2GDecoder Web </h5> 
+            <form action="" method="POST">
+                <input type="text" name="exi_msg" placeholder="EXI Message" required><br><br>
+                <button type="submit">Decode</button>
+            </form>
+            {% if result %}
+            <h5> Decode : {{ result }} </h5>
+            {% endif %}
+        </center>
+    </body>
+</html>
