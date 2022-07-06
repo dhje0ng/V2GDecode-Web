@@ -27,4 +27,6 @@ Make sure the docker container has been created.
 
 - [V2GDecoder](https://github.com/FlUxIuS/V2Gdecoder.git)
 
+- [V2G-WS-DISSECTORS](https://github.com/geynis/v2g-ws-dissectors)
+
 - MIT License
