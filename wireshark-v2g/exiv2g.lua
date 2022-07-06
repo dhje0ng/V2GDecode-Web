@@ -51,8 +51,6 @@ function p_exi.dissector(buf,pinfo,root)
         end
     end
 
-    offset = offset
-
     -- TODO EXI Options, Padding, ...
     if buf:len() > offset then
         Dissector.get("data"):call(buf(offset):tvb(),pinfo,root)
