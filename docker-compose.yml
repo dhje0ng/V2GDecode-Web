@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  v2gdecoder:
+    build: ./V2Gdecoder/
+    ports:
+      - "9081:9000"
+    networks:
+      v2gweb:
+        ipv4_address: 172.16.0.2
+
+  
+  v2gwebserver:
+    build: ./webserver/
+    ports:
+      - "1234:80"
+    depends_on:
+      - v2gdecoder
+    networks:
+      v2gweb:
+        ipv4_address: 172.16.0.3
+
+networks:
+  v2gweb:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
