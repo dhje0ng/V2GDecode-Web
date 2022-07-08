@@ -1,13 +1,21 @@
 version: '3.9'
 
 services:
-  v2gdecoder:
-    build: ./V2Gdecoder/
+  v2gdecoder-din70121:
+    build: ./V2Gdecoder-din70121
     ports:
       - "9081:9000"
     networks:
       v2gweb:
         ipv4_address: 172.16.0.2
+  
+  # v2gdecoder-iso15118:
+  #   build: ./V2Gdecoder-iso15118
+  #   ports:
+  #     - "9082:9000"
+  #   networks:
+  #     v2gweb:
+  #       ipv4_address: 172.16.0.4
 
   
   v2gwebserver:

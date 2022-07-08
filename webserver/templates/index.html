@@ -9,10 +9,15 @@
             <h2> V2GDecoder Web </h2> 
             <form action="" method="POST">
                 <input type="text" name="exi_msg" placeholder="EXI Message" required><br><br>
+                <select name="decode_type">
+                    <option value="DIN-70121">DIN 70121</option>
+                    <!--<option value="ISO-15118">ISO 15118</option>-->
+                </select><br><br>
                 <button type="submit">Decode</button>
             </form>
-            {% if data and result %}
+            {% if data and decode_type and result %}
                 <h5> Input : {{ data }} </h5>
+                <h5> Decode : {{ decode_type }} </h5>
             <h5> Decode : {{ result }} </h5>
             {% endif %}
         </center>

@@ -7,7 +7,8 @@ from xml.parsers.expat import ExpatError
 
 app = Flask(__name__)
 
-SERVER_HOST = "172.16.0.2" # v2gdecoder-container
+ISO15118_HOST = "172.16.0.4" # v2gdecoder-container(ISO15118)
+DIN70121_HOST = "172.16.0.2" # v2gdecoder-container(ISO15118)
 SERVER_PORT = 9000
 
 @app.route("/", methods=["GET", "POST"])
@@ -18,21 +19,29 @@ def main():
     elif request.method == "POST":
         try:
             data = request.form.get('exi_msg')
-            if data is not None:
-                result = decode_to_xml(data, "EXI")
-                # xml_data = xml.dom.minidom.parseString(result)
-                # xml_convert = xml_data.toprettyxml()
+            decode_type = request.form.get('decode_type')
+            if decode_type == "DIN-70121" and data is not None:
+                result = decode_to_xml_iso15118(data, "EXI")
                 if not result:
-                    return render_template("index.html", data=data, result="Error")
-                return render_template("index.html", data=data, result=result)
+                    return render_template("index.html", data=data, decode_type=decode_type, result="Error")
+                return render_template("index.html", data=data, decode_type=decode_type, result=result)
+                
         except ExpatError:
-            return render_template("index.html", data=data, result="No EXI Format")
+            return render_template("index.html", data=data, decode_type=decode_type, result="No EXI Format")
 
-def decode_to_xml(data, type):
+def decode_to_xml_iso15118(data, type):
     try:
-        service = f"http://{SERVER_HOST}:{SERVER_PORT}"
+        service = f"http://{ISO15118_HOST}:{SERVER_PORT}"
         res = post(service, headers={"Format":type}, data=data)
-        print(res, res.text)
+        return res.text
+
+    except ConnectionError:
+        return False
+
+def decode_to_xml_iso15118(data, type):
+    try:
+        service = f"http://{DIN70121_HOST}:{SERVER_PORT}"
+        res = post(service, headers={"Format":type}, data=data)
         return res.text
 
     except ConnectionError:
